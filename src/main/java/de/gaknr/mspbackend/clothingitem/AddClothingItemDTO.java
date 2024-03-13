@@ -2,11 +2,9 @@ package de.gaknr.mspbackend.clothingitem;
 
 import jakarta.validation.constraints.NotNull;
 
-import java.util.Base64;
-
 public record AddClothingItemDTO(
     String name,
-    @NotNull Base64 image,
+    @NotNull byte[] image,
     String brand,
     @NotNull String color,
     @NotNull MasterCategory masterCategory,

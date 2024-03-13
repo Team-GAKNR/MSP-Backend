@@ -2,13 +2,15 @@ package de.gaknr.mspbackend.clothingitem;
 
 import org.springframework.stereotype.Service;
 
+import java.util.Base64;
+
 @Service
 public class ClothingItemMapper {
 
     public ClothingItemEntity mapAddClothingItemDtoToEntity(AddClothingItemDTO addClothingItemDTO) {
         ClothingItemEntity clothingItemEntity = new ClothingItemEntity();
         clothingItemEntity.setName(addClothingItemDTO.name());
-        clothingItemEntity.setImage(addClothingItemDTO.image());
+        clothingItemEntity.setImage(Base64.getEncoder().encodeToString(addClothingItemDTO.image()));
         clothingItemEntity.setBrand(addClothingItemDTO.brand());
         clothingItemEntity.setColor(addClothingItemDTO.color());
         clothingItemEntity.setMasterCategory(addClothingItemDTO.masterCategory());
@@ -25,7 +27,7 @@ public class ClothingItemMapper {
         GetClothingItemDTO getClothingItemDTO = new GetClothingItemDTO(
             clothingItemEntity.getId(),
             clothingItemEntity.getName(),
-            clothingItemEntity.getImage(),
+            Base64.getDecoder().decode(clothingItemEntity.getImage()),
             clothingItemEntity.getBrand(),
             clothingItemEntity.getColor(),
             clothingItemEntity.getMasterCategory(),

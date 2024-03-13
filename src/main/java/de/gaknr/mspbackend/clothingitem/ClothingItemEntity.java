@@ -6,8 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.util.Base64;
 import java.util.Objects;
 
 
@@ -23,7 +21,7 @@ public class ClothingItemEntity {
 
     private String name;
 
-    private Base64 image;
+    private String image;
 
     private String brand;
 
