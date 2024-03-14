@@ -5,7 +5,9 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.bson.types.ObjectId;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -43,7 +45,7 @@ public class ClothingItemController {
     })
     @GetMapping("/clothingItem")
     public ResponseEntity<GetClothingItemDTO> getGetClothingItemDtoById(
-        @RequestParam("id") int id) {
+        @RequestParam("id") ObjectId id) {
         return new ResponseEntity<>(mapper.mapClothingItemEntityToGetClothingItemDTO(service.getById(id)), HttpStatus.OK);
     }
 
@@ -55,7 +57,7 @@ public class ClothingItemController {
     })
     @DeleteMapping("/clothingItem")
     public ResponseEntity<GetClothingItemDTO> deleteClothingItemById(
-        @RequestParam("id") int id) {
+        @RequestParam("id") ObjectId id) {
         service.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

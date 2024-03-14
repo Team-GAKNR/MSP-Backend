@@ -1,6 +1,7 @@
 package de.gaknr.mspbackend.clothingitem;
 
 import lombok.RequiredArgsConstructor;
+import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -15,11 +16,11 @@ public class ClothingItemService {
         repository.save(clothingItemEntity);
     }
 
-    public void deleteById(int id) {
+    public void deleteById(ObjectId id) {
         repository.deleteById(id);
     }
 
-    public ClothingItemEntity getById(int id) {
+    public ClothingItemEntity getById(ObjectId id) {
         Optional<ClothingItemEntity> optional = repository.findById(id);
         return optional.orElse(null);
     }

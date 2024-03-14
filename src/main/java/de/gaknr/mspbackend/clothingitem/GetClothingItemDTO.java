@@ -1,7 +1,9 @@
 package de.gaknr.mspbackend.clothingitem;
 
+import org.bson.types.ObjectId;
+
 public record GetClothingItemDTO(
-    int id,
+    ObjectId id,
     String name,
     byte[] image,
     String brand,
