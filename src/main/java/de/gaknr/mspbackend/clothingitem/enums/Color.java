@@ -1,4 +1,4 @@
-package de.gaknr.mspbackend.clothingitem;
+package de.gaknr.mspbackend.clothingitem.enums;
 
 public enum Color {
 

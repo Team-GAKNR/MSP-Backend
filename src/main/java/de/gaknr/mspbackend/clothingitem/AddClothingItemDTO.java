@@ -1,5 +1,6 @@
 package de.gaknr.mspbackend.clothingitem;
 
+import de.gaknr.mspbackend.clothingitem.enums.*;
 import jakarta.validation.constraints.NotNull;
 
 public record AddClothingItemDTO(

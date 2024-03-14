@@ -1,5 +1,6 @@
 package de.gaknr.mspbackend.clothingitem;
 
+import de.gaknr.mspbackend.clothingitem.enums.*;
 import org.bson.types.ObjectId;
 
 public record GetClothingItemDTO(
