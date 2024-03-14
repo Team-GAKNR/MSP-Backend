@@ -7,12 +7,12 @@ public record GetClothingItemDTO(
     String name,
     byte[] image,
     String brand,
-    String color,
+    Color color,
     MasterCategory masterCategory,
     SubCategory subCategory,
-    String type,
-    String season,
-    String usage,
+    Type type,
+    Season season,
+    Usage usage,
     boolean isFavorite
 ) {
 }

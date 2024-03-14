@@ -6,12 +6,12 @@ public record AddClothingItemDTO(
     String name,
     @NotNull byte[] image,
     String brand,
-    @NotNull String color,
+    @NotNull Color color,
     @NotNull MasterCategory masterCategory,
     @NotNull SubCategory subCategory,
-    @NotNull String type,
-    @NotNull String season,
-    @NotNull String usage,
+    @NotNull Type type,
+    @NotNull Season season,
+    @NotNull Usage usage,
     @NotNull boolean isFavorite
 ) {
 }

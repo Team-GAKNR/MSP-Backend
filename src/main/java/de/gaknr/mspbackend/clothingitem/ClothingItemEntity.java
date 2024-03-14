@@ -5,13 +5,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.MongoId;
-
 import java.util.Objects;
-
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,7 +17,6 @@ import java.util.Objects;
 @Document(collection = "ClothingItem")
 public class ClothingItemEntity {
 
-    @Id
     @MongoId
     private ObjectId id;
 
@@ -34,7 +30,7 @@ public class ClothingItemEntity {
     private String brand;
 
     @Field
-    private String color;
+    private Color color;
 
     @Field
     private MasterCategory masterCategory;
@@ -43,13 +39,13 @@ public class ClothingItemEntity {
     private SubCategory subCategory;
 
     @Field
-    private String type;
+    private Type type;
 
     @Field
-    private String season;
+    private Season season;
 
     @Field
-    private String usage;
+    private Usage usage;
 
     @Field
     private boolean isFavorite;

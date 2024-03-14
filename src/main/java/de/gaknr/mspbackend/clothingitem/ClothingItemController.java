@@ -31,7 +31,7 @@ public class ClothingItemController {
     @GetMapping("/clothingItems")
     public ResponseEntity<List<GetClothingItemDTO>> getAllClothingItems() {
         List<GetClothingItemDTO> list = new ArrayList<>();
-        for(ClothingItemEntity entity : this.service.getAll()){
+        for(ClothingItemEntity entity : this.service.getAll()) {
             list.add(this.mapper.mapClothingItemEntityToGetClothingItemDTO(entity));
         }
         return new ResponseEntity<>(list, HttpStatus.OK);
