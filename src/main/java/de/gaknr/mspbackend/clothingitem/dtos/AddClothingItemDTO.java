@@ -1,4 +1,4 @@
-package de.gaknr.mspbackend.clothingitem;
+package de.gaknr.mspbackend.clothingitem.dtos;
 
 import de.gaknr.mspbackend.clothingitem.enums.*;
 import jakarta.validation.constraints.NotNull;
