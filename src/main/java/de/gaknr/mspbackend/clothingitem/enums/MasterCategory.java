@@ -6,6 +6,7 @@ public enum MasterCategory {
     Accessories,
     Footwear,
     Personal_Care,
-    Free_Items
+    Free_Items,
+    NA
 
 }

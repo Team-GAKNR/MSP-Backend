@@ -6,6 +6,7 @@ public enum SubCategory {
     Shoes,
     Bags,
     Bottomwear,
-    Watches
+    Watches,
+    NA
 
 }

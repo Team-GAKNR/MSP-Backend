@@ -144,6 +144,7 @@ public enum Type {
     Sports_Shoes,
     Rucksacks,
     Lip_Gloss,
-    Mufflers
+    Mufflers,
+    NA
 
 }
