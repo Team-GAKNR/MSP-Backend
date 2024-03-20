@@ -1,7 +1,9 @@
 package de.gaknr.mspbackend.outfit;
 
-import de.gaknr.mspbackend.clothingitem.ClothingItemEntity;
+import de.gaknr.mspbackend.clothingitem.ClothingItemMapper;
 import de.gaknr.mspbackend.clothingitem.ClothingItemService;
+import de.gaknr.mspbackend.clothingitem.dtos.GetClothingItemDTO;
+
 import de.gaknr.mspbackend.outfit.dtos.AddOutfitDTO;
 import de.gaknr.mspbackend.outfit.dtos.GetOutfitDTO;
 
@@ -17,6 +19,7 @@ import java.util.List;
 public class OutfitMapper {
 
     private final ClothingItemService clothingItemService;
+    private final ClothingItemMapper clothingItemMapper;
 
     public OutfitEntity mapOutfitDTOToEntity(AddOutfitDTO addOutfitDTO) {
         OutfitEntity entity = new OutfitEntity();
@@ -27,9 +30,9 @@ public class OutfitMapper {
     }
 
     public GetOutfitDTO mapOutfitEntityToDTO(OutfitEntity outfitEntity) {
-        List<ClothingItemEntity> list = new ArrayList<>();
+        List<GetClothingItemDTO> list = new ArrayList<>();
         for(ObjectId id : outfitEntity.getPieces()){
-            list.add(this.clothingItemService.getById(id));
+            list.add(this.clothingItemMapper.mapClothingItemEntityToGetClothingItemDTO(this.clothingItemService.getById(id)));
         }
         return new GetOutfitDTO(
             outfitEntity.getId(),
