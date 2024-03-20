@@ -1,11 +1,13 @@
 package de.gaknr.mspbackend.clothingitem;
 
+import de.gaknr.mspbackend.clothingitem.dtos.AddClothingItemDTO;
 import de.gaknr.mspbackend.clothingitem.dtos.GetClothingItemDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.http.HttpStatus;
@@ -59,6 +61,20 @@ public class ClothingItemController {
     public ResponseEntity<GetClothingItemDTO> deleteClothingItemById(
         @RequestParam("id") ObjectId id) {
         service.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Operation(summary = "add clothing item")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "successful operation",
+            content = {@Content(mediaType = "application/json",
+                schema = @Schema(implementation = AddClothingItemDTO.class))})
+    })
+    @PostMapping("/clothingItem")
+    public ResponseEntity<GetClothingItemDTO> addClothingItem(
+        @RequestBody @Valid AddClothingItemDTO addClothingItemDTO
+        ) {
+        service.save(mapper.mapAddClothingItemDtoToEntity(addClothingItemDTO));
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
