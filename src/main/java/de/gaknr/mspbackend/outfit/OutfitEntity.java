@@ -1,7 +1,5 @@
 package de.gaknr.mspbackend.outfit;
 
-import de.gaknr.mspbackend.clothingitem.ClothingItemEntity;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,7 +25,7 @@ public class OutfitEntity {
     private ObjectId id;
 
     @Field
-    private List<ClothingItemEntity> pieces;
+    private List<ObjectId> pieces;
 
     @Field
     private boolean isFavorite;
