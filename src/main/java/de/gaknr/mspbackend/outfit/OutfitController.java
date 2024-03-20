@@ -34,7 +34,7 @@ public class OutfitController {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "successful operation",
             content = {@Content(mediaType = "application/json",
-                schema = @Schema(implementation = GetOutfitDTO.class))})
+                schema = @Schema(implementation = AddOutfitDTO.class))})
     })
     @PostMapping("/outfit")
     public ResponseEntity<GetOutfitDTO> createOutfit(
