@@ -41,11 +41,11 @@ public class UserMapper {
 
     public GetUserDTO mapUserEntityToDTO(UserEntity userEntity) {
         List<GetClothingItemDTO> closetList = new ArrayList<>();
-        for(ObjectId id : userEntity.getCloset()){
+        for(ObjectId id : userEntity.getCloset()) {
             closetList.add(this.clothingItemMapper.mapClothingItemEntityToGetClothingItemDTO(this.clothingItemService.getById(id)));
         }
         List<GetOutfitDTO> outfitsList = new ArrayList<>();
-        for(ObjectId id : userEntity.getOutfits()){
+        for(ObjectId id : userEntity.getOutfits()) {
             outfitsList.add(this.outfitMapper.mapOutfitEntityToDTO(this.outfitService.getById(id)));
         }
         return new GetUserDTO(
