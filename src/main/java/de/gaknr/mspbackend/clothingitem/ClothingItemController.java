@@ -2,17 +2,23 @@ package de.gaknr.mspbackend.clothingitem;
 
 import de.gaknr.mspbackend.clothingitem.dtos.AddClothingItemDTO;
 import de.gaknr.mspbackend.clothingitem.dtos.GetClothingItemDTO;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
 import jakarta.validation.Valid;
+
 import lombok.RequiredArgsConstructor;
+
 import org.bson.types.ObjectId;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +39,7 @@ public class ClothingItemController {
     @GetMapping("/clothingItems")
     public ResponseEntity<List<GetClothingItemDTO>> getAllClothingItems() {
         List<GetClothingItemDTO> list = new ArrayList<>();
-        for(ClothingItemEntity entity : this.service.getAll()) {
+        for (ClothingItemEntity entity : this.service.getAll()) {
             list.add(this.mapper.mapClothingItemEntityToGetClothingItemDTO(entity));
         }
         return new ResponseEntity<>(list, HttpStatus.OK);
@@ -73,7 +79,7 @@ public class ClothingItemController {
     @PostMapping("/clothingItem")
     public ResponseEntity<GetClothingItemDTO> addClothingItem(
         @RequestBody @Valid AddClothingItemDTO addClothingItemDTO
-        ) {
+    ) {
         service.save(mapper.mapAddClothingItemDtoToEntity(addClothingItemDTO));
         return new ResponseEntity<>(HttpStatus.OK);
     }

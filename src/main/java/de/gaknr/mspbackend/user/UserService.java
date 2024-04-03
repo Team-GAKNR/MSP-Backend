@@ -19,7 +19,7 @@ public class UserService {
         this.repository.save(userEntity);
     }
 
-    public void deleteById(ObjectId id){
+    public void deleteById(ObjectId id) {
         this.repository.deleteById(id);
     }
 

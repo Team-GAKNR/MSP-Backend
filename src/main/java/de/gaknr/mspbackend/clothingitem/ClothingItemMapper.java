@@ -2,6 +2,7 @@ package de.gaknr.mspbackend.clothingitem;
 
 import de.gaknr.mspbackend.clothingitem.dtos.AddClothingItemDTO;
 import de.gaknr.mspbackend.clothingitem.dtos.GetClothingItemDTO;
+
 import org.springframework.stereotype.Service;
 
 import java.util.Base64;
@@ -25,7 +26,7 @@ public class ClothingItemMapper {
         return clothingItemEntity;
     }
 
-    public GetClothingItemDTO mapClothingItemEntityToGetClothingItemDTO(ClothingItemEntity clothingItemEntity){
+    public GetClothingItemDTO mapClothingItemEntityToGetClothingItemDTO(ClothingItemEntity clothingItemEntity) {
         return new GetClothingItemDTO(
             clothingItemEntity.getId(),
             clothingItemEntity.getName(),
