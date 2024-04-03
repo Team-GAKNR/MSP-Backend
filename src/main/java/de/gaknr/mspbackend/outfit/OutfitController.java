@@ -39,7 +39,7 @@ public class OutfitController {
     @PostMapping("/outfit")
     public ResponseEntity<GetOutfitDTO> createOutfit(
         @Valid @RequestBody AddOutfitDTO addOutfitDTO
-        ) {
+    ) {
         this.service.save(this.mapper.mapOutfitDTOToEntity(addOutfitDTO));
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -53,7 +53,7 @@ public class OutfitController {
     @GetMapping("/outfits")
     public ResponseEntity<List<GetOutfitDTO>> getAllOutfits() {
         List<GetOutfitDTO> list = new ArrayList<>();
-        for(OutfitEntity entity : this.service.getAll()) {
+        for (OutfitEntity entity : this.service.getAll()) {
             list.add(this.mapper.mapOutfitEntityToDTO(entity));
         }
         return new ResponseEntity<>(list, HttpStatus.OK);
@@ -68,10 +68,10 @@ public class OutfitController {
     @GetMapping("/outfit")
     public ResponseEntity<GetOutfitDTO> getOutfitById(
         @RequestParam("id") ObjectId id
-        ) {
+    ) {
         return new ResponseEntity<>(
             this.mapper.mapOutfitEntityToDTO(
-            this.service.getById(id)),
+                this.service.getById(id)),
             HttpStatus.OK);
     }
 

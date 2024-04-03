@@ -33,7 +33,7 @@ public class OutfitMapper {
 
     public GetOutfitDTO mapOutfitEntityToDTO(OutfitEntity outfitEntity) {
         List<GetClothingItemDTO> list = new ArrayList<>();
-        for(ObjectId id : outfitEntity.getPieces()){
+        for (ObjectId id : outfitEntity.getPieces()) {
             list.add(this.clothingItemMapper.mapClothingItemEntityToGetClothingItemDTO(this.clothingItemService.getById(id)));
         }
         return new GetOutfitDTO(

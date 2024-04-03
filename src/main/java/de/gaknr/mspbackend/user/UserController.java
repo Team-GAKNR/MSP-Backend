@@ -39,7 +39,7 @@ public class UserController {
     @PostMapping("/user")
     public ResponseEntity<GetUserDTO> createUser(
         @Valid @RequestBody AddUserDTO addUserDTO
-        ) {
+    ) {
         this.service.save(this.mapper.mapUserDTOToEntity(addUserDTO));
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -53,7 +53,7 @@ public class UserController {
     @GetMapping("/users")
     public ResponseEntity<List<GetUserDTO>> getAllUsers() {
         List<GetUserDTO> list = new ArrayList<>();
-        for(UserEntity entity : this.service.getAll()){
+        for (UserEntity entity : this.service.getAll()) {
             list.add(this.mapper.mapUserEntityToDTO(entity));
         }
         return new ResponseEntity<>(list, HttpStatus.OK);
@@ -68,10 +68,10 @@ public class UserController {
     @GetMapping("/user")
     public ResponseEntity<GetUserDTO> getUserById(
         @RequestParam("id") ObjectId id
-        ) {
+    ) {
         return new ResponseEntity<>(
             this.mapper.mapUserEntityToDTO(
-            this.service.getById(id)),
+                this.service.getById(id)),
             HttpStatus.OK);
     }
 
