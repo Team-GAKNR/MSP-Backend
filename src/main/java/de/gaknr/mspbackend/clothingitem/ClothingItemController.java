@@ -85,4 +85,18 @@ public class ClothingItemController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @Operation(summary = "delete clothing item from user")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "successful operation",
+            content = {@Content(mediaType = "application/json",
+                schema = @Schema(implementation = GetClothingItemDTO.class))})
+    })
+    @DeleteMapping("/clothingItem")
+    public ResponseEntity<GetClothingItemDTO> deleteClothingItemFromUser(
+        @RequestParam("clothingItemId") ObjectId clothingItemId,
+        @RequestParam("userId") ObjectId userId) {
+        service.deleteClothingItemFromUserOutfitsAndUser(clothingItemId, userId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }
