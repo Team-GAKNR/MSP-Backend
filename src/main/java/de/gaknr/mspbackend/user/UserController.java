@@ -107,8 +107,8 @@ public class UserController {
             content = {@Content(mediaType = "application/json",
                 schema = @Schema(implementation = GetClothingItemDTO.class))})
     })
-    @DeleteMapping("/user/clothing-item-of-user")
-    public ResponseEntity<GetClothingItemDTO> deleteClothingItemFromUser(
+    @DeleteMapping("/user/clothing-item")
+    public ResponseEntity<GetClothingItemDTO> deleteClothingItem(
         @RequestParam("clothingItemId") ObjectId clothingItemId,
         @RequestParam("userId") ObjectId userId) {
         clothingItemService.deleteClothingItemFromUserOutfitsAndUser(clothingItemId, userId);
