@@ -24,7 +24,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping("api/v1")
+@RequestMapping("api/v1/user")
 @RequiredArgsConstructor
 public class OutfitController {
 
