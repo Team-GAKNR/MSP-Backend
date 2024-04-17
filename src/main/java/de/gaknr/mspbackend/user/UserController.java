@@ -109,8 +109,8 @@ public class UserController {
     })
     @DeleteMapping("/user/clothing-item")
     public ResponseEntity<GetClothingItemDTO> deleteClothingItem(
-        @RequestParam("clothingItemId") ObjectId clothingItemId,
-        @RequestParam("userId") ObjectId userId) {
+        @RequestParam("clothing-item-id") ObjectId clothingItemId,
+        @RequestParam("user-id") ObjectId userId) {
         clothingItemService.deleteClothingItemFromUserOutfitsAndUser(clothingItemId, userId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
