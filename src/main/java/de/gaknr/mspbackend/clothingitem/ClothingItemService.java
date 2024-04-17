@@ -55,6 +55,7 @@ public class ClothingItemService {
         UserEntity userEntity = userService.getById(userId);
         userEntity.getCloset().remove(clothingItemId);
         userService.save(userEntity);
+        deleteById(clothingItemId);
 
     }
 

@@ -37,7 +37,7 @@ public class ClothingItemController {
             content = {@Content(mediaType = "application/json",
                 schema = @Schema(implementation = GetClothingItemDTO.class))})
     })
-    @GetMapping("/clothingItems")
+    @GetMapping("/clothing-items")
     public ResponseEntity<List<GetClothingItemDTO>> getAllClothingItems() {
         List<GetClothingItemDTO> list = new ArrayList<>();
         for (ClothingItemEntity entity : this.service.getAll()) {
@@ -52,7 +52,7 @@ public class ClothingItemController {
             content = {@Content(mediaType = "application/json",
                 schema = @Schema(implementation = GetClothingItemDTO.class))})
     })
-    @GetMapping("/clothingItem")
+    @GetMapping("/clothing-item")
     public ResponseEntity<GetClothingItemDTO> getGetClothingItemDtoById(
         @RequestParam("id") ObjectId id) {
         return new ResponseEntity<>(mapper.mapClothingItemEntityToGetClothingItemDTO(service.getById(id)), HttpStatus.OK);
@@ -64,7 +64,7 @@ public class ClothingItemController {
             content = {@Content(mediaType = "application/json",
                 schema = @Schema(implementation = GetClothingItemDTO.class))})
     })
-    @DeleteMapping("/clothingItem")
+    @DeleteMapping("/clothing-item")
     public ResponseEntity<GetClothingItemDTO> deleteClothingItemById(
         @RequestParam("id") ObjectId id) {
         service.deleteById(id);
@@ -77,25 +77,11 @@ public class ClothingItemController {
             content = {@Content(mediaType = "application/json",
                 schema = @Schema(implementation = AddClothingItemDTO.class))})
     })
-    @PostMapping("/clothingItem")
+    @PostMapping("/clothing-item")
     public ResponseEntity<GetClothingItemDTO> addClothingItem(
         @RequestBody @Valid AddClothingItemDTO addClothingItemDTO
     ) {
         service.save(mapper.mapAddClothingItemDtoToEntity(addClothingItemDTO));
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @Operation(summary = "delete clothing item from user")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "successful operation",
-            content = {@Content(mediaType = "application/json",
-                schema = @Schema(implementation = GetClothingItemDTO.class))})
-    })
-    @DeleteMapping("/clothingItemOfUser")
-    public ResponseEntity<GetClothingItemDTO> deleteClothingItemFromUser(
-        @RequestParam("clothingItemId") ObjectId clothingItemId,
-        @RequestParam("userId") ObjectId userId) {
-        service.deleteClothingItemFromUserOutfitsAndUser(clothingItemId, userId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
