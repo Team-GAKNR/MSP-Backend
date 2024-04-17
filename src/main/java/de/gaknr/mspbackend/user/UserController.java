@@ -1,5 +1,10 @@
 package de.gaknr.mspbackend.user;
 
+import de.gaknr.mspbackend.clothingitem.ClothingItemMapper;
+import de.gaknr.mspbackend.clothingitem.ClothingItemService;
+import de.gaknr.mspbackend.clothingitem.dtos.GetClothingItemDTO;
+import de.gaknr.mspbackend.outfit.OutfitMapper;
+import de.gaknr.mspbackend.outfit.OutfitService;
 import de.gaknr.mspbackend.user.dtos.AddUserDTO;
 import de.gaknr.mspbackend.user.dtos.GetUserDTO;
 
@@ -28,8 +33,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserService service;
-    private final UserMapper mapper;
+    private final UserService userService;
+    private final UserMapper userMapper;
+
+    private final ClothingItemService clothingItemService;
+    private final ClothingItemMapper clothingItemMapper;
+
+    private final OutfitService outfitService;
+    private final OutfitMapper outfitMapper;
 
     @Operation(summary = "create a new user")
     @ApiResponses(value = {
@@ -41,7 +52,7 @@ public class UserController {
     public ResponseEntity<GetUserDTO> createUser(
         @Valid @RequestBody AddUserDTO addUserDTO
     ) {
-        this.service.save(this.mapper.mapUserDTOToEntity(addUserDTO));
+        this.userService.save(this.userMapper.mapUserDTOToEntity(addUserDTO));
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -54,8 +65,8 @@ public class UserController {
     @GetMapping("/users")
     public ResponseEntity<List<GetUserDTO>> getAllUsers() {
         List<GetUserDTO> list = new ArrayList<>();
-        for (UserEntity entity : this.service.getAll()) {
-            list.add(this.mapper.mapUserEntityToDTO(entity));
+        for (UserEntity entity : this.userService.getAll()) {
+            list.add(this.userMapper.mapUserEntityToDTO(entity));
         }
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
@@ -71,8 +82,8 @@ public class UserController {
         @RequestParam("id") ObjectId id
     ) {
         return new ResponseEntity<>(
-            this.mapper.mapUserEntityToDTO(
-                this.service.getById(id)),
+            this.userMapper.mapUserEntityToDTO(
+                this.userService.getById(id)),
             HttpStatus.OK);
     }
 
@@ -86,7 +97,21 @@ public class UserController {
     public ResponseEntity<GetUserDTO> deleteUserById(
         @RequestParam("id") ObjectId id
     ) {
-        this.service.deleteById(id);
+        this.userService.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Operation(summary = "delete clothing item from user")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "successful operation",
+            content = {@Content(mediaType = "application/json",
+                schema = @Schema(implementation = GetClothingItemDTO.class))})
+    })
+    @DeleteMapping("/user/clothing-item-of-user")
+    public ResponseEntity<GetClothingItemDTO> deleteClothingItemFromUser(
+        @RequestParam("clothingItemId") ObjectId clothingItemId,
+        @RequestParam("userId") ObjectId userId) {
+        clothingItemService.deleteClothingItemFromUserOutfitsAndUser(clothingItemId, userId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
