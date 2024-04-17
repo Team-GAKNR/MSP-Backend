@@ -85,4 +85,16 @@ public class ClothingItemController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PutMapping("/clothing-item")
+    public ResponseEntity<GetClothingItemDTO> updateClothingItem(
+        @RequestParam("id") ObjectId id,
+        @RequestBody @Valid AddClothingItemDTO updatedClothingItemDTO
+    ) {
+        ClothingItemEntity updatedEntity = this.mapper.mapAddClothingItemDtoToEntity(updatedClothingItemDTO);
+        updatedEntity.setId(id);
+        this.service.save(updatedEntity);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }
