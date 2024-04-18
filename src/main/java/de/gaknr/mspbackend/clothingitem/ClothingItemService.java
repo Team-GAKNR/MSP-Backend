@@ -25,10 +25,6 @@ public class ClothingItemService {
         repository.save(clothingItemEntity);
     }
 
-    public void deleteById(ObjectId id) {
-        repository.deleteById(id);
-    }
-
     public ClothingItemEntity getById(ObjectId id) {
         Optional<ClothingItemEntity> optional = repository.findById(id);
         return optional.orElse(null);
@@ -54,8 +50,8 @@ public class ClothingItemService {
 
         UserEntity userEntity = userService.getById(userId);
         userEntity.getCloset().remove(clothingItemId);
-        userService.save(userEntity);
-        deleteById(clothingItemId);
+        userService.update(userEntity, userId);
+        repository.deleteById(clothingItemId);
 
     }
 

@@ -56,6 +56,21 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @Operation(summary = "update a user")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "successful operation",
+            content = {@Content(mediaType = "application/json",
+                schema = @Schema(implementation = AddUserDTO.class))})
+    })
+    @PostMapping("/user")
+    public ResponseEntity<GetUserDTO> updateUserById(
+        @Valid @RequestBody AddUserDTO addUserDTO,
+        @RequestParam("user-id") ObjectId id
+    ) {
+        this.userService.update(this.userMapper.mapUserDTOToEntity(addUserDTO), id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @Operation(summary = "get all users")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "successful operation",
@@ -79,7 +94,7 @@ public class UserController {
     })
     @GetMapping("/user")
     public ResponseEntity<GetUserDTO> getUserById(
-        @RequestParam("id") ObjectId id
+        @RequestParam("user-id") ObjectId id
     ) {
         return new ResponseEntity<>(
             this.userMapper.mapUserEntityToDTO(
@@ -95,7 +110,7 @@ public class UserController {
     })
     @DeleteMapping("/user")
     public ResponseEntity<GetUserDTO> deleteUserById(
-        @RequestParam("id") ObjectId id
+        @RequestParam("user-id") ObjectId id
     ) {
         this.userService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -108,9 +123,10 @@ public class UserController {
                 schema = @Schema(implementation = GetClothingItemDTO.class))})
     })
     @DeleteMapping("/user/clothing-item")
-    public ResponseEntity<GetClothingItemDTO> deleteClothingItem(
+    public ResponseEntity<GetClothingItemDTO> deleteClothingItemFromUserById(
         @RequestParam("clothing-item-id") ObjectId clothingItemId,
-        @RequestParam("user-id") ObjectId userId) {
+        @RequestParam("user-id") ObjectId userId
+    ) {
         clothingItemService.deleteClothingItemFromUserOutfitsAndUser(clothingItemId, userId);
         return new ResponseEntity<>(HttpStatus.OK);
     }

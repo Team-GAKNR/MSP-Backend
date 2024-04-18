@@ -32,4 +32,13 @@ public class UserService {
         return optional.orElse(null);
     }
 
+    public void update(UserEntity userEntityNew, ObjectId id) {
+        Optional<UserEntity> optional = this.repository.findById(id);
+        if(optional.isPresent()){
+            optional.get().setCloset(userEntityNew.getCloset());
+            optional.get().setOutfits(userEntityNew.getOutfits());
+            this.repository.save(optional.get());
+        }
+    }
+
 }
