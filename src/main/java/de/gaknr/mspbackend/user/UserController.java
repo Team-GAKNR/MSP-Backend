@@ -271,4 +271,19 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @Operation(summary = "update outfit")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "successful operation",
+            content = {@Content(mediaType = "application/json",
+                schema = @Schema(implementation = AddOutfitDTO.class))})
+    })
+    @PutMapping("/user/outfit")
+    public ResponseEntity<GetOutfitDTO> updateOutfit(
+        @RequestParam("id") ObjectId id,
+        @RequestBody @Valid AddOutfitDTO updatedOutfitDTO
+    ) {
+        this.outfitService.update(this.outfitMapper.mapOutfitDTOToEntity(updatedOutfitDTO), id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }
