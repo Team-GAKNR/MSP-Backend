@@ -60,7 +60,7 @@ public class ClothingItemService {
             for(ObjectId clothingItem : outfitEntity.getPieces()) {
                 if(clothingItem.equals(clothingItemId)) {
                     outfitEntity.getPieces().remove(clothingItem);
-                    outfitService.save(outfitEntity);
+                    outfitService.save(outfitEntity, userId);
                 }
             }
         }

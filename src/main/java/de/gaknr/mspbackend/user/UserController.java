@@ -5,9 +5,12 @@ import de.gaknr.mspbackend.clothingitem.ClothingItemService;
 import de.gaknr.mspbackend.clothingitem.dtos.AddClothingItemDTO;
 import de.gaknr.mspbackend.clothingitem.dtos.GetClothingItemDTO;
 
+import de.gaknr.mspbackend.outfit.OutfitEntity;
 import de.gaknr.mspbackend.outfit.OutfitMapper;
 import de.gaknr.mspbackend.outfit.OutfitService;
 
+import de.gaknr.mspbackend.outfit.dtos.AddOutfitDTO;
+import de.gaknr.mspbackend.outfit.dtos.GetOutfitDTO;
 import de.gaknr.mspbackend.user.dtos.AddUserDTO;
 import de.gaknr.mspbackend.user.dtos.GetUserDTO;
 
@@ -168,7 +171,7 @@ public class UserController {
             content = {@Content(mediaType = "application/json",
                 schema = @Schema(implementation = AddClothingItemDTO.class))})
     })
-    @PostMapping("/clothing-item")
+    @PostMapping("/user/clothing-item")
     public ResponseEntity<GetClothingItemDTO> addClothingItem(
         @RequestBody @Valid AddClothingItemDTO addClothingItemDTO,
         @RequestParam("user-id") String userId
@@ -183,7 +186,7 @@ public class UserController {
             content = {@Content(mediaType = "application/json",
                 schema = @Schema(implementation = AddClothingItemDTO.class))})
     })
-    @PutMapping("/clothing-item")
+    @PutMapping("/user/clothing-item")
     public ResponseEntity<GetClothingItemDTO> updateClothingItem(
         @RequestParam("id") ObjectId id,
         @RequestBody @Valid AddClothingItemDTO updatedClothingItemDTO
@@ -204,6 +207,68 @@ public class UserController {
         @RequestParam("user-id") String userId
     ) {
         clothingItemService.deleteClothingItemFromUserById(clothingItemId, userId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Operation(summary = "create new outfit")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "successful operation",
+            content = {@Content(mediaType = "application/json",
+                schema = @Schema(implementation = AddOutfitDTO.class))})
+    })
+    @PostMapping("/user/outfit")
+    public ResponseEntity<GetOutfitDTO> createOutfit(
+        @Valid @RequestBody AddOutfitDTO addOutfitDTO,
+        @RequestParam("user-id") String userId
+    ) {
+        this.outfitService.save(this.outfitMapper.mapOutfitDTOToEntity(addOutfitDTO), userId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Operation(summary = "get all outfits")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "successful operation",
+            content = {@Content(mediaType = "application/json",
+                schema = @Schema(implementation = GetOutfitDTO.class))})
+    })
+    @GetMapping("/user/outfits")
+    public ResponseEntity<List<GetOutfitDTO>> getAllOutfits(
+        @RequestParam("user-id") String userId
+    ) {
+        List<GetOutfitDTO> list = new ArrayList<>();
+
+        for (ObjectId outfitId : this.userService.getById(userId).getOutfits()) {
+            list.add(this.outfitMapper.mapOutfitEntityToDTO(this.outfitService.getById(outfitId)));
+        }
+
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
+    @Operation(summary = "get outfit by id")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "successful operation",
+            content = {@Content(mediaType = "application/json",
+                schema = @Schema(implementation = GetOutfitDTO.class))})
+    })
+    @GetMapping("/user/outfit")
+    public ResponseEntity<GetOutfitDTO> getOutfitById(
+        @RequestParam("id") ObjectId id
+    ) {
+        return new ResponseEntity<>(this.outfitMapper.mapOutfitEntityToDTO(this.outfitService.getById(id)), HttpStatus.OK);
+    }
+
+    @Operation(summary = "delete outfit by id")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "successful operation",
+            content = {@Content(mediaType = "application/json",
+                schema = @Schema(implementation = GetOutfitDTO.class))})
+    })
+    @DeleteMapping("/user/outfit")
+    public ResponseEntity<GetOutfitDTO> deleteOutfitById(
+        @RequestParam("id") ObjectId id,
+        @RequestParam("user-id") String userId
+    ) {
+        outfitService.deleteById(id, userId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
