@@ -2,13 +2,13 @@ package de.gaknr.mspbackend.outfit;
 
 import de.gaknr.mspbackend.user.UserEntity;
 import de.gaknr.mspbackend.user.UserService;
+
 import lombok.RequiredArgsConstructor;
 
 import org.bson.types.ObjectId;
 
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service

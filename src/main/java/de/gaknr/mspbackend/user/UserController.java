@@ -5,12 +5,11 @@ import de.gaknr.mspbackend.clothingitem.ClothingItemService;
 import de.gaknr.mspbackend.clothingitem.dtos.AddClothingItemDTO;
 import de.gaknr.mspbackend.clothingitem.dtos.GetClothingItemDTO;
 
-import de.gaknr.mspbackend.outfit.OutfitEntity;
 import de.gaknr.mspbackend.outfit.OutfitMapper;
 import de.gaknr.mspbackend.outfit.OutfitService;
-
 import de.gaknr.mspbackend.outfit.dtos.AddOutfitDTO;
 import de.gaknr.mspbackend.outfit.dtos.GetOutfitDTO;
+
 import de.gaknr.mspbackend.user.dtos.AddUserDTO;
 import de.gaknr.mspbackend.user.dtos.GetUserDTO;
 
