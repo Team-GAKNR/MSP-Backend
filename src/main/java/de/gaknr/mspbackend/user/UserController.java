@@ -251,9 +251,14 @@ public class UserController {
     })
     @GetMapping("/user/outfit")
     public ResponseEntity<GetOutfitDTO> getOutfitById(
-        @RequestParam("id") ObjectId id
+        @RequestParam("outfit-id") ObjectId id,
+        @RequestParam("user-id") String userId
     ) {
-        return new ResponseEntity<>(this.outfitMapper.mapOutfitEntityToDTO(this.outfitService.getById(id)), HttpStatus.OK);
+        if(this.userService.getById(userId).getOutfits().contains(id)) {
+            return new ResponseEntity<>(this.outfitMapper.mapOutfitEntityToDTO(this.outfitService.getById(id)), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @Operation(summary = "delete outfit by id")
