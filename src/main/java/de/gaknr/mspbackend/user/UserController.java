@@ -70,9 +70,9 @@ public class UserController {
     @PutMapping()
     public ResponseEntity<GetUserDTO> updateUserById(
         @Valid @RequestBody AddUserDTO addUserDTO,
-        @RequestParam("user-id") String id
+        @RequestParam("user-id") String userId
     ) {
-        this.userService.update(this.userMapper.mapUserDTOToEntity(addUserDTO), id);
+        this.userService.update(this.userMapper.mapUserDTOToEntity(addUserDTO), userId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -99,11 +99,11 @@ public class UserController {
     })
     @GetMapping()
     public ResponseEntity<GetUserDTO> getUserById(
-        @RequestParam("user-id") String id
+        @RequestParam("user-id") String userId
     ) {
         return new ResponseEntity<>(
             this.userMapper.mapUserEntityToDTO(
-                this.userService.getById(id)),
+                this.userService.getById(userId)),
             HttpStatus.OK);
     }
 
@@ -115,9 +115,9 @@ public class UserController {
     })
     @DeleteMapping()
     public ResponseEntity<GetUserDTO> deleteUserById(
-        @RequestParam("user-id") String id
+        @RequestParam("user-id") String userId
     ) {
-        this.userService.deleteById(id);
+        this.userService.deleteById(userId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -129,11 +129,11 @@ public class UserController {
     })
     @GetMapping("/clothing-items")
     public ResponseEntity<List<GetClothingItemDTO>> getAllClothingItems(
-        @RequestParam("user-id") String id
+        @RequestParam("user-id") String userId
     ) {
         List<GetClothingItemDTO> list = new ArrayList<>();
 
-        for (ObjectId clothingId : this.userService.getById(id).getCloset()) {
+        for (ObjectId clothingId : this.userService.getById(userId).getCloset()) {
             list.add(this.clothingItemMapper.mapClothingItemEntityToGetClothingItemDTO(this.clothingItemService.getById(clothingId)));
         }
 
@@ -151,8 +151,8 @@ public class UserController {
     })
     @GetMapping("/clothing-item")
     public ResponseEntity<GetClothingItemDTO> getClothingItemById(
-        @RequestParam("clothing-item-id") ObjectId clothingId,
-        @RequestParam("user-id") String userId
+        @RequestParam("user-id") String userId,
+        @RequestParam("clothing-item-id") ObjectId clothingId
     ) {
         if(this.userService.getById(userId).getCloset().contains(clothingId)) {
             return new ResponseEntity<>(
@@ -187,10 +187,10 @@ public class UserController {
     })
     @PutMapping("/clothing-item")
     public ResponseEntity<GetClothingItemDTO> updateClothingItem(
-        @RequestParam("id") ObjectId id,
-        @RequestBody @Valid AddClothingItemDTO updatedClothingItemDTO
+        @RequestBody @Valid AddClothingItemDTO updatedClothingItemDTO,
+        @RequestParam("clothing-item-id") ObjectId clothingItemId
     ) {
-        this.clothingItemService.update(this.clothingItemMapper.mapAddClothingItemDtoToEntity(updatedClothingItemDTO), id);
+        this.clothingItemService.update(this.clothingItemMapper.mapAddClothingItemDtoToEntity(updatedClothingItemDTO), clothingItemId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -202,8 +202,8 @@ public class UserController {
     })
     @DeleteMapping("/clothing-item")
     public ResponseEntity<GetClothingItemDTO> deleteClothingItem(
-        @RequestParam("clothing-item-id") ObjectId clothingItemId,
-        @RequestParam("user-id") String userId
+        @RequestParam("user-id") String userId,
+        @RequestParam("clothing-item-id") ObjectId clothingItemId
     ) {
         clothingItemService.deleteClothingItemFromUserById(clothingItemId, userId);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -251,11 +251,11 @@ public class UserController {
     })
     @GetMapping("/outfit")
     public ResponseEntity<GetOutfitDTO> getOutfitById(
-        @RequestParam("outfit-id") ObjectId id,
-        @RequestParam("user-id") String userId
+        @RequestParam("user-id") String userId,
+        @RequestParam("outfit-id") ObjectId outfitId
     ) {
-        if(this.userService.getById(userId).getOutfits().contains(id)) {
-            return new ResponseEntity<>(this.outfitMapper.mapOutfitEntityToDTO(this.outfitService.getById(id)), HttpStatus.OK);
+        if(this.userService.getById(userId).getOutfits().contains(outfitId)) {
+            return new ResponseEntity<>(this.outfitMapper.mapOutfitEntityToDTO(this.outfitService.getById(outfitId)), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -269,10 +269,10 @@ public class UserController {
     })
     @DeleteMapping("/outfit")
     public ResponseEntity<GetOutfitDTO> deleteOutfitById(
-        @RequestParam("id") ObjectId id,
-        @RequestParam("user-id") String userId
+        @RequestParam("user-id") String userId,
+        @RequestParam("outfit-id") ObjectId outfitId
     ) {
-        outfitService.deleteById(id, userId);
+        outfitService.deleteById(outfitId, userId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -284,10 +284,10 @@ public class UserController {
     })
     @PutMapping("/outfit")
     public ResponseEntity<GetOutfitDTO> updateOutfit(
-        @RequestParam("id") ObjectId id,
-        @RequestBody @Valid AddOutfitDTO updatedOutfitDTO
+        @RequestBody @Valid AddOutfitDTO updatedOutfitDTO,
+        @RequestParam("outfit-id") ObjectId outfitId
     ) {
-        this.outfitService.update(this.outfitMapper.mapOutfitDTOToEntity(updatedOutfitDTO), id);
+        this.outfitService.update(this.outfitMapper.mapOutfitDTOToEntity(updatedOutfitDTO), outfitId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
