@@ -32,17 +32,8 @@ public class ClothingItemService {
     public void update(ClothingItemEntity clothingItemEntity, ObjectId id) {
         Optional<ClothingItemEntity> optional = repository.findById(id);
         if (optional.isPresent()) {
-            optional.get().setName(clothingItemEntity.getName());
-            optional.get().setImage(clothingItemEntity.getImage());
-            optional.get().setBrand(clothingItemEntity.getBrand());
-            optional.get().setColor(clothingItemEntity.getColor());
-            optional.get().setMasterCategory(clothingItemEntity.getMasterCategory());
-            optional.get().setSubCategory(clothingItemEntity.getSubCategory());
-            optional.get().setType(clothingItemEntity.getType());
-            optional.get().setSeason(clothingItemEntity.getSeason());
-            optional.get().setUsage(clothingItemEntity.getUsage());
-            optional.get().setFavorite(clothingItemEntity.isFavorite());
-            repository.save(optional.get());
+            clothingItemEntity.setId(id);
+            repository.save(clothingItemEntity);
         }
     }
 
