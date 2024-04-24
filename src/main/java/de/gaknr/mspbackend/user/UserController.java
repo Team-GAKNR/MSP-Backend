@@ -150,7 +150,7 @@ public class UserController {
                 schema = @Schema(implementation = GetClothingItemDTO.class))})
     })
     @GetMapping("/clothing-item")
-    public ResponseEntity<GetClothingItemDTO> getGetClothingItemDtoById(
+    public ResponseEntity<GetClothingItemDTO> getClothingItemById(
         @RequestParam("clothing-item-id") ObjectId clothingId,
         @RequestParam("user-id") String userId
     ) {
