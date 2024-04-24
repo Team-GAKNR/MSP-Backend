@@ -34,7 +34,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping("api/v1")
+@RequestMapping("api/v1/user")
 @RequiredArgsConstructor
 public class UserController {
 
@@ -53,7 +53,7 @@ public class UserController {
             content = {@Content(mediaType = "application/json",
                 schema = @Schema(implementation = AddUserDTO.class))})
     })
-    @PostMapping("/user")
+    @PostMapping()
     public ResponseEntity<GetUserDTO> createUser(
         @Valid @RequestBody AddUserDTO addUserDTO
     ) {
@@ -67,7 +67,7 @@ public class UserController {
             content = {@Content(mediaType = "application/json",
                 schema = @Schema(implementation = AddUserDTO.class))})
     })
-    @PutMapping("/user")
+    @PutMapping()
     public ResponseEntity<GetUserDTO> updateUserById(
         @Valid @RequestBody AddUserDTO addUserDTO,
         @RequestParam("user-id") String id
@@ -82,7 +82,7 @@ public class UserController {
             content = {@Content(mediaType = "application/json",
                 schema = @Schema(implementation = GetUserDTO.class))})
     })
-    @GetMapping("/users")
+    @GetMapping("s")
     public ResponseEntity<List<GetUserDTO>> getAllUsers() {
         List<GetUserDTO> list = new ArrayList<>();
         for (UserEntity entity : this.userService.getAll()) {
@@ -97,7 +97,7 @@ public class UserController {
             content = {@Content(mediaType = "application/json",
                 schema = @Schema(implementation = GetUserDTO.class))})
     })
-    @GetMapping("/user")
+    @GetMapping()
     public ResponseEntity<GetUserDTO> getUserById(
         @RequestParam("user-id") String id
     ) {
@@ -113,7 +113,7 @@ public class UserController {
             content = {@Content(mediaType = "application/json",
                 schema = @Schema(implementation = GetUserDTO.class))})
     })
-    @DeleteMapping("/user")
+    @DeleteMapping()
     public ResponseEntity<GetUserDTO> deleteUserById(
         @RequestParam("user-id") String id
     ) {
@@ -127,7 +127,7 @@ public class UserController {
             content = {@Content(mediaType = "application/json",
                 schema = @Schema(implementation = GetClothingItemDTO.class))})
     })
-    @GetMapping("/user/clothing-items")
+    @GetMapping("/clothing-items")
     public ResponseEntity<List<GetClothingItemDTO>> getAllClothingItems(
         @RequestParam("user-id") String id
     ) {
@@ -149,7 +149,7 @@ public class UserController {
             content = {@Content(mediaType = "application/json",
                 schema = @Schema(implementation = GetClothingItemDTO.class))})
     })
-    @GetMapping("/user/clothing-item")
+    @GetMapping("/clothing-item")
     public ResponseEntity<GetClothingItemDTO> getGetClothingItemDtoById(
         @RequestParam("clothing-item-id") ObjectId clothingId,
         @RequestParam("user-id") String userId
@@ -170,7 +170,7 @@ public class UserController {
             content = {@Content(mediaType = "application/json",
                 schema = @Schema(implementation = AddClothingItemDTO.class))})
     })
-    @PostMapping("/user/clothing-item")
+    @PostMapping("/clothing-item")
     public ResponseEntity<GetClothingItemDTO> addClothingItem(
         @RequestBody @Valid AddClothingItemDTO addClothingItemDTO,
         @RequestParam("user-id") String userId
@@ -185,7 +185,7 @@ public class UserController {
             content = {@Content(mediaType = "application/json",
                 schema = @Schema(implementation = AddClothingItemDTO.class))})
     })
-    @PutMapping("/user/clothing-item")
+    @PutMapping("/clothing-item")
     public ResponseEntity<GetClothingItemDTO> updateClothingItem(
         @RequestParam("id") ObjectId id,
         @RequestBody @Valid AddClothingItemDTO updatedClothingItemDTO
@@ -200,7 +200,7 @@ public class UserController {
             content = {@Content(mediaType = "application/json",
                 schema = @Schema(implementation = GetClothingItemDTO.class))})
     })
-    @DeleteMapping("/user/clothing-item")
+    @DeleteMapping("/clothing-item")
     public ResponseEntity<GetClothingItemDTO> deleteClothingItemFromUserById(
         @RequestParam("clothing-item-id") ObjectId clothingItemId,
         @RequestParam("user-id") String userId
@@ -215,7 +215,7 @@ public class UserController {
             content = {@Content(mediaType = "application/json",
                 schema = @Schema(implementation = AddOutfitDTO.class))})
     })
-    @PostMapping("/user/outfit")
+    @PostMapping("/outfit")
     public ResponseEntity<GetOutfitDTO> createOutfit(
         @Valid @RequestBody AddOutfitDTO addOutfitDTO,
         @RequestParam("user-id") String userId
@@ -230,7 +230,7 @@ public class UserController {
             content = {@Content(mediaType = "application/json",
                 schema = @Schema(implementation = GetOutfitDTO.class))})
     })
-    @GetMapping("/user/outfits")
+    @GetMapping("/outfits")
     public ResponseEntity<List<GetOutfitDTO>> getAllOutfits(
         @RequestParam("user-id") String userId
     ) {
@@ -249,7 +249,7 @@ public class UserController {
             content = {@Content(mediaType = "application/json",
                 schema = @Schema(implementation = GetOutfitDTO.class))})
     })
-    @GetMapping("/user/outfit")
+    @GetMapping("/outfit")
     public ResponseEntity<GetOutfitDTO> getOutfitById(
         @RequestParam("outfit-id") ObjectId id,
         @RequestParam("user-id") String userId
@@ -267,7 +267,7 @@ public class UserController {
             content = {@Content(mediaType = "application/json",
                 schema = @Schema(implementation = GetOutfitDTO.class))})
     })
-    @DeleteMapping("/user/outfit")
+    @DeleteMapping("/outfit")
     public ResponseEntity<GetOutfitDTO> deleteOutfitById(
         @RequestParam("id") ObjectId id,
         @RequestParam("user-id") String userId
@@ -282,7 +282,7 @@ public class UserController {
             content = {@Content(mediaType = "application/json",
                 schema = @Schema(implementation = AddOutfitDTO.class))})
     })
-    @PutMapping("/user/outfit")
+    @PutMapping("/outfit")
     public ResponseEntity<GetOutfitDTO> updateOutfit(
         @RequestParam("id") ObjectId id,
         @RequestBody @Valid AddOutfitDTO updatedOutfitDTO
