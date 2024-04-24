@@ -1,7 +1,10 @@
 package de.gaknr.mspbackend.user;
 
+import de.gaknr.mspbackend.clothingitem.ClothingItemService;
+import de.gaknr.mspbackend.outfit.OutfitService;
 import lombok.RequiredArgsConstructor;
 
+import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,12 +16,22 @@ public class UserService {
 
     private final UserRepository repository;
 
+    private final OutfitService outfitService;
+
+    private final ClothingItemService clothingItemService;
+
     public void save(UserEntity userEntity) {
         this.repository.save(userEntity);
     }
 
     public void deleteById(String id) {
         UserEntity entity = getById(id);
+        for(ObjectId outfitId : entity.getOutfits()) {
+            this.outfitService.deleteById(outfitId, id);
+        }
+        for(ObjectId clothingItemId : entity.getCloset()) {
+            this.clothingItemService.deleteClothingItemFromUserById(clothingItemId, id);
+        }
         this.repository.deleteById(entity.getId());
     }
 
