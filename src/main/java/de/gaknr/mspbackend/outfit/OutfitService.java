@@ -41,9 +41,8 @@ public class OutfitService {
     public void update(OutfitEntity outfitEntity, ObjectId id) {
         Optional<OutfitEntity> optional = repository.findById(id);
         if (optional.isPresent()) {
-            optional.get().setPieces(outfitEntity.getPieces());
-            optional.get().setFavorite(outfitEntity.isFavorite());
-            repository.save(optional.get());
+            outfitEntity.setId(id);
+            repository.save(outfitEntity);
         }
     }
 
