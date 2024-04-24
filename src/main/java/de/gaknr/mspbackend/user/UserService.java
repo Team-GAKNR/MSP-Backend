@@ -34,9 +34,8 @@ public class UserService {
     public void update(UserEntity userEntityNew, String id) {
         Optional<UserEntity> optional = this.repository.findByKeycloakUserId(id);
         if(optional.isPresent()){
-            optional.get().setCloset(userEntityNew.getCloset());
-            optional.get().setOutfits(userEntityNew.getOutfits());
-            this.repository.save(optional.get());
+            userEntityNew.setId(optional.get().getId());
+            this.repository.save(userEntityNew);
         }
     }
 
