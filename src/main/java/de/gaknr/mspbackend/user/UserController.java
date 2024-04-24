@@ -201,7 +201,7 @@ public class UserController {
                 schema = @Schema(implementation = GetClothingItemDTO.class))})
     })
     @DeleteMapping("/clothing-item")
-    public ResponseEntity<GetClothingItemDTO> deleteClothingItemFromUserById(
+    public ResponseEntity<GetClothingItemDTO> deleteClothingItem(
         @RequestParam("clothing-item-id") ObjectId clothingItemId,
         @RequestParam("user-id") String userId
     ) {
