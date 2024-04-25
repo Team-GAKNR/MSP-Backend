@@ -205,7 +205,7 @@ public class UserController {
         @RequestParam("user-id") String userId,
         @RequestParam("clothing-item-id") ObjectId clothingItemId
     ) {
-        clothingItemService.deleteClothingItemFromUserById(clothingItemId, userId);
+        clothingItemService.deleteById(clothingItemId, userId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

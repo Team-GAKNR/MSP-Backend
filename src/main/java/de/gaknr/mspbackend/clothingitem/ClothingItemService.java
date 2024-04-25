@@ -12,7 +12,6 @@ import org.bson.types.ObjectId;
 
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -42,25 +41,23 @@ public class ClothingItemService {
         return optional.orElse(null);
     }
 
-    public void deleteClothingItemFromUserById(ObjectId clothingItemId, String userId) {
-        List<ObjectId> userOutfits = userService.getById(userId).getOutfits();
-        for(ObjectId outfit : userOutfits) {
+    public void deleteById(ObjectId clothingItemId, String userId) {
+        UserEntity userEntity = this.userService.getById(userId);
 
-            OutfitEntity outfitEntity = outfitService.getById(outfit);
-
-            for(ObjectId clothingItem : outfitEntity.getPieces()) {
-                if(clothingItem.equals(clothingItemId)) {
-                    outfitEntity.getPieces().remove(clothingItem);
-                    outfitService.save(outfitEntity, userId);
-                }
+        for(ObjectId outfitId : userEntity.getOutfits()) {
+            OutfitEntity outfitEntity = this.outfitService.getById(outfitId);
+            if(outfitEntity.getPieces().contains(clothingItemId)) {
+                outfitEntity.getPieces().remove(clothingItemId);
+                this.outfitService.update(outfitEntity, outfitId);
             }
         }
 
-        UserEntity userEntity = userService.getById(userId);
-        userEntity.getCloset().remove(clothingItemId);
-        userService.update(userEntity, userId);
-        repository.deleteById(clothingItemId);
+        if(userEntity.getCloset().contains(clothingItemId)) {
+            userEntity.getCloset().remove(clothingItemId);
+            this.userService.update(userEntity, userId);
+        }
 
+        this.repository.deleteById(clothingItemId);
     }
 
 }

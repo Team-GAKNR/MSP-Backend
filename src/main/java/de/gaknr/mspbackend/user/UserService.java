@@ -30,7 +30,7 @@ public class UserService {
             this.outfitService.deleteById(outfitId, id);
         }
         for(ObjectId clothingItemId : entity.getCloset()) {
-            this.clothingItemService.deleteClothingItemFromUserById(clothingItemId, id);
+            this.clothingItemService.deleteById(clothingItemId, id);
         }
         this.repository.deleteById(entity.getId());
     }
