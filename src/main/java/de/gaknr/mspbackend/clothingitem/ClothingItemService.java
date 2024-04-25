@@ -1,9 +1,11 @@
 package de.gaknr.mspbackend.clothingitem;
 
 import de.gaknr.mspbackend.outfit.OutfitEntity;
+import de.gaknr.mspbackend.outfit.OutfitRepository;
 import de.gaknr.mspbackend.outfit.OutfitService;
 
 import de.gaknr.mspbackend.user.UserEntity;
+import de.gaknr.mspbackend.user.UserRepository;
 import de.gaknr.mspbackend.user.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -19,10 +21,13 @@ import java.util.Optional;
 public class ClothingItemService {
 
     private final ClothingItemRepository repository;
-    private final UserService userService;
-    private final OutfitService outfitService;
+//    private final UserService userService;
+//    private final OutfitService outfitService;
+    private final UserRepository userRepository;
+    private final OutfitRepository outfitRepository;
 
     public void save(ClothingItemEntity clothingItemEntity, String userId) {
+        UserService userService = new UserService(userRepository, outfitRepository, repository);
         UserEntity entity = userService.getById(userId);
         entity.getCloset().add(repository.save(clothingItemEntity).getId());
         userService.update(entity, userId);
@@ -42,19 +47,21 @@ public class ClothingItemService {
     }
 
     public void deleteById(ObjectId clothingItemId, String userId) {
-        UserEntity userEntity = this.userService.getById(userId);
+        UserService userService = new UserService(userRepository, outfitRepository, repository);
+        OutfitService outfitService = new OutfitService(outfitRepository, userRepository, repository);
+        UserEntity userEntity = userService.getById(userId);
 
         for(ObjectId outfitId : userEntity.getOutfits()) {
-            OutfitEntity outfitEntity = this.outfitService.getById(outfitId);
+            OutfitEntity outfitEntity = outfitService.getById(outfitId);
             if(outfitEntity.getPieces().contains(clothingItemId)) {
                 outfitEntity.getPieces().remove(clothingItemId);
-                this.outfitService.update(outfitEntity, outfitId);
+                outfitService.update(outfitEntity, outfitId);
             }
         }
 
         if(userEntity.getCloset().contains(clothingItemId)) {
             userEntity.getCloset().remove(clothingItemId);
-            this.userService.update(userEntity, userId);
+            userService.update(userEntity, userId);
         }
 
         this.repository.deleteById(clothingItemId);

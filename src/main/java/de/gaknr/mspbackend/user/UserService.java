@@ -1,6 +1,8 @@
 package de.gaknr.mspbackend.user;
 
+import de.gaknr.mspbackend.clothingitem.ClothingItemRepository;
 import de.gaknr.mspbackend.clothingitem.ClothingItemService;
+import de.gaknr.mspbackend.outfit.OutfitRepository;
 import de.gaknr.mspbackend.outfit.OutfitService;
 import lombok.RequiredArgsConstructor;
 
@@ -16,21 +18,26 @@ public class UserService {
 
     private final UserRepository repository;
 
-    private final OutfitService outfitService;
+//    private final OutfitService outfitService;
+//
+//    private final ClothingItemService clothingItemService;
 
-    private final ClothingItemService clothingItemService;
+    private final OutfitRepository outfitRepository;
+    private final ClothingItemRepository clothingItemRepository;
 
     public void save(UserEntity userEntity) {
         this.repository.save(userEntity);
     }
 
     public void deleteById(String id) {
+        OutfitService outfitService = new OutfitService(outfitRepository, repository, clothingItemRepository);
+        ClothingItemService clothingItemService = new ClothingItemService(clothingItemRepository, repository, outfitRepository);
         UserEntity entity = getById(id);
         for(ObjectId outfitId : entity.getOutfits()) {
-            this.outfitService.deleteById(outfitId, id);
+            outfitService.deleteById(outfitId, id);
         }
         for(ObjectId clothingItemId : entity.getCloset()) {
-            this.clothingItemService.deleteById(clothingItemId, id);
+            clothingItemService.deleteById(clothingItemId, id);
         }
         this.repository.deleteById(entity.getId());
     }
