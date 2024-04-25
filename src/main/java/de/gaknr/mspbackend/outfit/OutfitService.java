@@ -1,6 +1,7 @@
 package de.gaknr.mspbackend.outfit;
 
 import de.gaknr.mspbackend.clothingitem.ClothingItemRepository;
+
 import de.gaknr.mspbackend.user.UserEntity;
 import de.gaknr.mspbackend.user.UserRepository;
 import de.gaknr.mspbackend.user.UserService;
@@ -18,7 +19,6 @@ import java.util.Optional;
 public class OutfitService {
 
     private final OutfitRepository repository;
-//    private final UserService userService;
     private final UserRepository userRepository;
     private final ClothingItemRepository clothingItemRepository;
 

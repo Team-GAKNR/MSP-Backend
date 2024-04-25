@@ -21,8 +21,6 @@ import java.util.Optional;
 public class ClothingItemService {
 
     private final ClothingItemRepository repository;
-//    private final UserService userService;
-//    private final OutfitService outfitService;
     private final UserRepository userRepository;
     private final OutfitRepository outfitRepository;
 

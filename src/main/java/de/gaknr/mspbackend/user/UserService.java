@@ -2,8 +2,10 @@ package de.gaknr.mspbackend.user;
 
 import de.gaknr.mspbackend.clothingitem.ClothingItemRepository;
 import de.gaknr.mspbackend.clothingitem.ClothingItemService;
+
 import de.gaknr.mspbackend.outfit.OutfitRepository;
 import de.gaknr.mspbackend.outfit.OutfitService;
+
 import lombok.RequiredArgsConstructor;
 
 import org.bson.types.ObjectId;
@@ -17,11 +19,6 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository repository;
-
-//    private final OutfitService outfitService;
-//
-//    private final ClothingItemService clothingItemService;
-
     private final OutfitRepository outfitRepository;
     private final ClothingItemRepository clothingItemRepository;
 
