@@ -82,7 +82,7 @@ public class UserController {
             content = {@Content(mediaType = "application/json",
                 schema = @Schema(implementation = GetUserDTO.class))})
     })
-    @GetMapping("s")
+    @GetMapping("/all")
     public ResponseEntity<List<GetUserDTO>> getAllUsers() {
         List<GetUserDTO> list = new ArrayList<>();
         for (UserEntity entity : this.userService.getAll()) {
