@@ -5,11 +5,13 @@ import de.gaknr.mspbackend.clothingitem.ClothingItemService;
 import de.gaknr.mspbackend.clothingitem.dtos.AddClothingItemDTO;
 import de.gaknr.mspbackend.clothingitem.dtos.GetClothingItemDTO;
 
+import de.gaknr.mspbackend.outfit.OutfitEntity;
 import de.gaknr.mspbackend.outfit.OutfitMapper;
 import de.gaknr.mspbackend.outfit.OutfitService;
 import de.gaknr.mspbackend.outfit.dtos.AddOutfitDTO;
 import de.gaknr.mspbackend.outfit.dtos.GetOutfitDTO;
 
+import de.gaknr.mspbackend.outfit.generation.OutfitGenerationService;
 import de.gaknr.mspbackend.user.dtos.AddUserDTO;
 import de.gaknr.mspbackend.user.dtos.GetUserDTO;
 
@@ -46,6 +48,7 @@ public class UserController {
 
     private final OutfitService outfitService;
     private final OutfitMapper outfitMapper;
+    private final OutfitGenerationService outfitGenerationService;
 
     @Operation(summary = "create a new user")
     @ApiResponses(value = {
@@ -259,6 +262,24 @@ public class UserController {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @Operation(summary = "get outfit by id")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "successful operation",
+            content = {@Content(mediaType = "application/json",
+                schema = @Schema(implementation = GetOutfitDTO.class))})
+    })
+    @GetMapping("/outfits-generated")
+    public ResponseEntity<List<GetOutfitDTO>> getGeneratedOutfitsForUserId(
+        @RequestParam("user-id") String userId
+    ) {
+        List<OutfitEntity> outfitEntityList = outfitGenerationService.generateOutfitsFromCloset(userService.getById(userId).getCloset());
+        List<GetOutfitDTO> outfitDTOList = new ArrayList<>();
+        for(OutfitEntity outfitEntity : outfitEntityList) {
+            outfitDTOList.add(outfitMapper.mapOutfitEntityToDTO(outfitEntity));
+        }
+        return new ResponseEntity<>(outfitDTOList, HttpStatus.OK);
     }
 
     @Operation(summary = "delete outfit by id")
