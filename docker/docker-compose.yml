@@ -23,7 +23,7 @@ services:
 
   keycloak:
     image: quay.io/keycloak/keycloak:24.0.2
-    command: ["start-dev", "--import-realm"]
+    command: ["start-dev", "--spi-event-listener-regis-enabled=true", "--spi-event-listener-provider=regis", "--import-realm"]
     restart: unless-stopped
     environment:
       KC_DB: postgres
@@ -39,4 +39,5 @@ services:
       - 8081:8080
     volumes:
       - ./keycloak/realm.json:/opt/keycloak/data/import/realm.json:ro
+      - ../target/MSP-Backend-0.0.1-SNAPSHOT.jar:/opt/keycloak/providers/customeventlistener.jar
     logging: *logging
