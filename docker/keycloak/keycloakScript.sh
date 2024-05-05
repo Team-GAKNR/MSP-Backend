@@ -1,7 +1,9 @@
 #!/bin/bash
 
-/opt/keycloak/bin/kc.sh build
+sleep 10
+
+/opt/keycloak/bin/kc.sh build --spi-event-listener-provider=regis --spi-event-listener-regis-enabled=true
 
 /opt/keycloak/bin/kc.sh show-config
 
-/opt/keycloak/bin/kc.sh start-dev --import-realm --spi-event-listener-regis-enabled=true --spi-event-listener-provider=regis
+/opt/keycloak/bin/kc.sh start-dev --import-realm
