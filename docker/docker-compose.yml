@@ -42,4 +42,4 @@ services:
       - ./keycloak/MSP-Backend-0.0.1-SNAPSHOT.jar:/opt/keycloak/providers/MSP-Backend-0.0.1-SNAPSHOT.jar
       - ./keycloak/keycloakScript.sh:/opt/keycloak/scripts/keycloakScript.sh
     logging: *logging
-    entrypoint: "/opt/keycloak/scripts/keycloakScript.sh"
+    entrypoint: "bash -c 'sleep 10 && /opt/keycloak/scripts/keycloakScript.sh'"
