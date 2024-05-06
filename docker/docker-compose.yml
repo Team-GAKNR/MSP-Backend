@@ -24,6 +24,8 @@ services:
   keycloak:
     image: quay.io/keycloak/keycloak:24.0.2
     restart: unless-stopped
+    depends_on:
+      - postgres
     environment:
       KC_DB: postgres
       KC_DB_USERNAME: keycloak
@@ -39,7 +41,7 @@ services:
       - 8081:8080
     volumes:
       - ./keycloak/realm.json:/opt/keycloak/data/import/realm.json:ro
-      - ./keycloak/MSP-Backend-0.0.1-SNAPSHOT.jar:/opt/keycloak/providers/MSP-Backend-0.0.1-SNAPSHOT.jar
+      - ./keycloak/MSP-Backend-0.0.1-SNAPSHOT-jar-with-dependencies.jar:/opt/keycloak/providers/MSP-Backend-0.0.1-SNAPSHOT-jar-with-dependencies.jar
       - ./keycloak/keycloakScript.sh:/opt/keycloak/scripts/keycloakScript.sh
     logging: *logging
-    entrypoint: "bash -c 'sleep 10 && /opt/keycloak/scripts/keycloakScript.sh'"
+    entrypoint: "bash -c 'sleep 15 && /opt/keycloak/scripts/keycloakScript.sh'"

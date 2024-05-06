@@ -1,6 +1,4 @@
-#!/bin/bash
-
-/opt/keycloak/bin/kc.sh build --spi-event-listener-provider=regis --spi-event-listener-regis-enabled=true
+/opt/keycloak/bin/kc.sh build --spi-event-listener-regis-enabled=true
 
 /opt/keycloak/bin/kc.sh show-config
 
