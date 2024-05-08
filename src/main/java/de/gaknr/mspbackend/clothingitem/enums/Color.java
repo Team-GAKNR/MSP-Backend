@@ -1,5 +1,8 @@
 package de.gaknr.mspbackend.clothingitem.enums;
 
+import java.util.Arrays;
+import java.util.List;
+
 public enum Color {
 
     Sea_Green,
@@ -51,74 +54,99 @@ public enum Color {
     Taupe;
 
     public Boolean isBlue(Color color) {
-        return color == Color.Navy_Blue ||
-            color == Color.Turquoise_Blue ||
-            color == Color.Blue;
+        List<Color> blueColors = Arrays.asList(
+            Color.Navy_Blue,
+            Color.Turquoise_Blue,
+            Color.Blue);
+        return(blueColors.contains(color));
     }
 
     public Boolean isRed(Color color) {
-        return color == Color.Maroon ||
-            color == Color.Red ||
-            color == Color.Burgundy;
+        List<Color> redColors = Arrays.asList(
+            Color.Maroon,
+            Color.Red,
+            Color.Burgundy);
+        return(redColors.contains(color));
     }
 
     public Boolean isGreen(Color color) {
-        return color == Color.Sea_Green ||
-            color == Color.Olive ||
-            color == Color.Khaki ||
-            color == Color.Teal ||
-            color == Color.Lime_Green ||
-            color == Color.Green;
+        List<Color> greenColors = Arrays.asList(
+            Color.Sea_Green,
+            Color.Olive,
+            Color.Khaki,
+            Color.Teal,
+            Color.Lime_Green,
+            Color.Green
+        );
+        return greenColors.contains(color);
     }
 
     public Boolean isYellow(Color color) {
-        return color == Color.Yellow ||
-            color == Color.Gold;
+        List<Color> yellowColors = Arrays.asList(
+            Color.Yellow,
+            Color.Gold
+        );
+        return yellowColors.contains(color);
     }
 
     public Boolean isPink(Color color) {
-        return color == Color.Pink ||
-            color == Color.Purple ||
-            color == Color.Magenta ||
-            color == Color.Mauve ||
-            color == Color.Nude ||
-            color == Color.Rose ||
-            color == Color.Lavender;
+        List<Color> pinkColors = Arrays.asList(
+            Color.Pink,
+            Color.Purple,
+            Color.Magenta,
+            Color.Mauve,
+            Color.Nude,
+            Color.Rose,
+            Color.Lavender
+        );
+        return pinkColors.contains(color);
     }
 
     public Boolean isOrange(Color color) {
-        return color == Color.Peach ||
-            color == Color.Orange ||
-            color == Color.Rust;
+        List<Color> orangeColors = Arrays.asList(
+            Color.Peach,
+            Color.Orange,
+            Color.Rust
+        );
+        return orangeColors.contains(color);
     }
 
     public Boolean isBrown(Color color) {
-        return color == Color.Copper ||
-            color == Color.Bronze ||
-            color == Color.Beige ||
-            color == Color.Coffee_Brown ||
-            color == Color.Tan ||
-            color == Color.Cream ||
-            color == Color.Mushroom_Brown ||
-            color == Color.Brown ||
-            color == Color.Taupe;
+        List<Color> brownColors = Arrays.asList(
+            Color.Copper,
+            Color.Bronze,
+            Color.Beige,
+            Color.Coffee_Brown,
+            Color.Tan,
+            Color.Cream,
+            Color.Mushroom_Brown,
+            Color.Brown,
+            Color.Taupe
+        );
+        return brownColors.contains(color);
     }
 
     public Boolean isBlack(Color color) {
-        return color == Color.Black ||
-            color == Color.Charcoal ||
-            color == Color.NA ||
-            color == Color.Multi;
+        List<Color> blackColors = Arrays.asList(
+            Color.Black,
+            Color.Charcoal,
+            Color.NA,
+            Color.Multi
+        );
+        return blackColors.contains(color);
     }
 
     public Boolean isWhite(Color color) {
-        return color == Color.Steel ||
-            color == Color.Metallic ||
-            color == Color.Silver ||
-            color == Color.Grey_Melange ||
-            color == Color.Grey ||
-            color == Color.Off_White ||
-            color == Color.White;
+        List<Color> whiteColors = Arrays.asList(
+            Color.Steel,
+            Color.Metallic,
+            Color.Silver,
+            Color.Grey_Melange,
+            Color.Grey,
+            Color.Off_White,
+            Color.White
+        );
+        return whiteColors.contains(color);
     }
 
 }
