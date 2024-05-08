@@ -5,13 +5,13 @@ import de.gaknr.mspbackend.clothingitem.ClothingItemService;
 import de.gaknr.mspbackend.clothingitem.dtos.AddClothingItemDTO;
 import de.gaknr.mspbackend.clothingitem.dtos.GetClothingItemDTO;
 
-import de.gaknr.mspbackend.outfit.OutfitEntity;
 import de.gaknr.mspbackend.outfit.OutfitMapper;
 import de.gaknr.mspbackend.outfit.OutfitService;
 import de.gaknr.mspbackend.outfit.dtos.AddOutfitDTO;
 import de.gaknr.mspbackend.outfit.dtos.GetOutfitDTO;
 
 import de.gaknr.mspbackend.outfit.generation.OutfitGenerationService;
+import de.gaknr.mspbackend.outfit.generation.OutfitStructureEntity;
 import de.gaknr.mspbackend.user.dtos.AddUserDTO;
 import de.gaknr.mspbackend.user.dtos.GetUserDTO;
 
@@ -122,6 +122,21 @@ public class UserController {
     ) {
         this.userService.deleteById(userId);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Operation(summary = "get all available usages for user")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "successful operation",
+            content = {@Content(mediaType = "application/json",
+                schema = @Schema(implementation = GetClothingItemDTO.class))})
+    })
+    @GetMapping("/usages")
+    public ResponseEntity<List<String>> getAvailableUsagesForUserId(
+        @RequestParam("user-id") String userId
+    ) {
+        return new ResponseEntity<>(outfitGenerationService.getAvailableUsagesForCloset(
+            userService.getById(userId).getCloset()
+        ), HttpStatus.OK);
     }
 
     @Operation(summary = "get all clothing items")
@@ -264,22 +279,47 @@ public class UserController {
         }
     }
 
-    @Operation(summary = "get outfit by id")
+    @Operation(summary = "generate outfit by usage")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "successful operation",
             content = {@Content(mediaType = "application/json",
                 schema = @Schema(implementation = GetOutfitDTO.class))})
     })
-    @GetMapping("/outfits-generated")
-    public ResponseEntity<List<GetOutfitDTO>> getGeneratedOutfitsForUserId(
+    @GetMapping("/outfit/generate")
+    public ResponseEntity<GetOutfitDTO> generateOutfitByUsage(
+        @RequestParam("user-id") String userId,
+        @RequestParam("usage") String usage
+    ) {
+        GetOutfitDTO getOutfitDTO = outfitMapper.mapOutfitEntityToDTO(
+            outfitMapper.mapOutfitStructureEntityToOutfitEntity(
+                outfitGenerationService.generateOutfitByUsage(
+                    userService.getById(userId).getCloset(), usage
+                )
+            )
+        );
+        return new ResponseEntity<>(getOutfitDTO, HttpStatus.OK);
+    }
+
+    @Operation(summary = "generate one outfit for each available usage for user")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "successful operation",
+            content = {@Content(mediaType = "application/json",
+                schema = @Schema(implementation = GetOutfitDTO.class))})
+    })
+    @GetMapping("/outfits/generate")
+    public ResponseEntity<List<GetOutfitDTO>> generateOutfitsForEachUsage(
         @RequestParam("user-id") String userId
     ) {
-        List<OutfitEntity> outfitEntityList = outfitGenerationService.generateOutfitsFromCloset(userService.getById(userId).getCloset());
-        List<GetOutfitDTO> outfitDTOList = new ArrayList<>();
-        for(OutfitEntity outfitEntity : outfitEntityList) {
-            outfitDTOList.add(outfitMapper.mapOutfitEntityToDTO(outfitEntity));
+        List<GetOutfitDTO> getOutfitDTOS = new ArrayList<>();
+        List<OutfitStructureEntity> outfitStructureEntityList = outfitGenerationService
+            .generateOutfitForEachUsage(userService.getById(userId).getCloset());
+        for(OutfitStructureEntity outfit : outfitStructureEntityList) {
+            getOutfitDTOS.add(
+                outfitMapper.mapOutfitEntityToDTO(
+                    outfitMapper.mapOutfitStructureEntityToOutfitEntity(outfit))
+            );
         }
-        return new ResponseEntity<>(outfitDTOList, HttpStatus.OK);
+        return new ResponseEntity<>(getOutfitDTOS, HttpStatus.OK);
     }
 
     @Operation(summary = "delete outfit by id")
