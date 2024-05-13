@@ -36,12 +36,11 @@ services:
       KC_REALM_NAME: msp
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
-      KC_EVENT_LISTENERS: regis
     ports:
       - 8081:8080
     volumes:
       - ./keycloak/realm.json:/opt/keycloak/data/import/realm.json:ro
-      - ./keycloak/MSP-Backend-0.0.1-SNAPSHOT-jar-with-dependencies.jar:/opt/keycloak/providers/MSP-Backend-0.0.1-SNAPSHOT-jar-with-dependencies.jar
+      - ./keycloak/CustomKeycloakEvent-1.0-SNAPSHOT-jar-with-dependencies.jar:/opt/keycloak/providers/CustomKeycloakEvent-1.0-SNAPSHOT-jar-with-dependencies.jar
       - ./keycloak/keycloakScript.sh:/opt/keycloak/scripts/keycloakScript.sh
     logging: *logging
     entrypoint: "bash -c 'sleep 15 && /opt/keycloak/scripts/keycloakScript.sh'"
