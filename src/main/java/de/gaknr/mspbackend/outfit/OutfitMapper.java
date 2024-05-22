@@ -7,6 +7,7 @@ import de.gaknr.mspbackend.clothingitem.dtos.GetClothingItemDTO;
 import de.gaknr.mspbackend.outfit.dtos.AddOutfitDTO;
 import de.gaknr.mspbackend.outfit.dtos.GetOutfitDTO;
 
+import de.gaknr.mspbackend.outfit.generation.OutfitStructureEntity;
 import lombok.RequiredArgsConstructor;
 
 import org.bson.types.ObjectId;
@@ -41,6 +42,18 @@ public class OutfitMapper {
             list,
             outfitEntity.isFavorite()
         );
+    }
+
+    public OutfitEntity mapOutfitStructureEntityToOutfitEntity(OutfitStructureEntity outfitStructureEntity) {
+        List<ObjectId> piecesFromOutfitStructure = new ArrayList<>();
+        piecesFromOutfitStructure.add(outfitStructureEntity.getShoes());
+        piecesFromOutfitStructure.add(outfitStructureEntity.getBottomwear());
+        piecesFromOutfitStructure.add(outfitStructureEntity.getTopwear());
+
+        OutfitEntity outfitEntity = new OutfitEntity();
+        outfitEntity.setPieces(piecesFromOutfitStructure);
+
+        return outfitEntity;
     }
 
 }
