@@ -128,7 +128,7 @@ public class UserController {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "successful operation",
             content = {@Content(mediaType = "application/json",
-                schema = @Schema(implementation = GetClothingItemDTO.class))})
+                schema = @Schema(implementation = String.class))})
     })
     @GetMapping("/usages")
     public ResponseEntity<List<String>> getAvailableUsagesForUserId(

@@ -5,10 +5,13 @@ import de.gaknr.mspbackend.clothingitem.ClothingItemService;
 import de.gaknr.mspbackend.clothingitem.enums.Season;
 import de.gaknr.mspbackend.clothingitem.enums.SubCategory;
 import de.gaknr.mspbackend.clothingitem.enums.Usage;
-import de.gaknr.mspbackend.outfit.OutfitEntity;
+
 import de.gaknr.mspbackend.outfit.OutfitMapper;
+
 import lombok.RequiredArgsConstructor;
+
 import org.bson.types.ObjectId;
+
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -35,16 +38,12 @@ public class OutfitGenerationService {
         for(ObjectId item : clothingItems) {
             if(clothingItemService.getById(item).getSubCategory() == SubCategory.Shoes) {
                 shoesItems.add(item);
+                continue;
             }
-        }
-
-        for(ObjectId item : clothingItems) {
             if(clothingItemService.getById(item).getSubCategory() == SubCategory.Bottomwear) {
                 bottomwearItems.add(item);
+                continue;
             }
-        }
-
-        for(ObjectId item : clothingItems) {
             if(clothingItemService.getById(item).getSubCategory() == SubCategory.Topwear) {
                 topwearItems.add(item);
             }
@@ -65,20 +64,6 @@ public class OutfitGenerationService {
 
     }
 
-    /*public List<OutfitEntity> generateOutfitsFromCloset(List<ObjectId> closet) {
-        List<OutfitStructureEntity> outfitList = new ArrayList<>();
-        List<OutfitEntity> outfitEntityList = new ArrayList<>();
-        for(int i = 0; i <= closet.size(); i++) {
-            outfitList.add(generateSingleOutfit(closet));
-        }
-        for(OutfitStructureEntity outfitStructure : removeDoubleOutfits(outfitList)) {
-            outfitEntityList.add(
-                outfitMapper.mapOutfitStructureEntityToOutfitEntity(outfitStructure)
-            );
-        }
-        return outfitEntityList;
-    }*/
-
     public ObjectId selectRandomItemFromList(List<ObjectId> items) {
         Random rand = new Random();
         return items.get(rand.nextInt(items.size()));
@@ -92,24 +77,22 @@ public class OutfitGenerationService {
         for(ObjectId clothingItem : closet) {
             ClothingItemEntity item = clothingItemService.getById(clothingItem);
             if(item.getUsage() == usage && item.getSubCategory() == SubCategory.Shoes) {
-                shoes = clothingItem;
-                break;
+                if(shoes == null) {
+                    shoes = clothingItem;
+                }
             }
-        }
-        for(ObjectId clothingItem : closet) {
-            ClothingItemEntity item = clothingItemService.getById(clothingItem);
             if(item.getUsage() == usage && item.getSubCategory() == SubCategory.Bottomwear) {
-                bottomwear = clothingItem;
-                break;
+                if(bottomwear == null) {
+                    bottomwear = clothingItem;
+                }
             }
-        }
-        for(ObjectId clothingItem : closet) {
-            ClothingItemEntity item = clothingItemService.getById(clothingItem);
             if(item.getUsage() == usage && item.getSubCategory() == SubCategory.Topwear) {
-                topwear = clothingItem;
-                break;
+                if(topwear == null) {
+                    topwear = clothingItem;
+                }
             }
         }
+
         return shoes != null && bottomwear != null && topwear != null;
     }
 
@@ -117,42 +100,15 @@ public class OutfitGenerationService {
 
         List<String> availableUsagesList = new ArrayList<>();
 
-        if(checkUsageAvailability(closet, Usage.Formal)) {
-            availableUsagesList.add("Formal");
-        }
-        if(checkUsageAvailability(closet, Usage.Casual)) {
-            availableUsagesList.add("Casual");
-        }
-        if(checkUsageAvailability(closet, Usage.Sports)) {
-            availableUsagesList.add("Sports");
-        }
-        if(checkUsageAvailability(closet, Usage.Home)) {
-            availableUsagesList.add("Home");
-        }
-        if(checkUsageAvailability(closet, Usage.Party)) {
-            availableUsagesList.add("Party");
-        }
-        if(checkUsageAvailability(closet, Usage.Travel)) {
-            availableUsagesList.add("Travel");
-        }
-        if(checkUsageAvailability(closet, Usage.Smart_Casual)) {
-            availableUsagesList.add("Smart_Casual");
-        }
-        return availableUsagesList;
-    }
-
-    /*public List<OutfitStructureEntity> removeDoubleOutfits(List<OutfitStructureEntity> outfitList) {
-        Set<OutfitStructureEntity> uniqueOutfits = new HashSet<>();
-        List<OutfitStructureEntity> result = new ArrayList<>();
-
-        for(OutfitStructureEntity outfit : outfitList) {
-            if(uniqueOutfits.add(outfit)) {
-                result.add(outfit);
+        for(ObjectId id : closet) {
+            ClothingItemEntity entity = this.clothingItemService.getById(id);
+            if(!availableUsagesList.contains(entity.getUsage().toString()) && checkUsageAvailability(closet, entity.getUsage())){
+                availableUsagesList.add(entity.getUsage().toString());
             }
         }
 
-        return result;
-    }*/
+        return availableUsagesList;
+    }
 
     public List<ObjectId> filterClothingItemsBySeason(List<ObjectId> closet, LocalDate date) {
         List<ObjectId> resultList = new ArrayList<>();

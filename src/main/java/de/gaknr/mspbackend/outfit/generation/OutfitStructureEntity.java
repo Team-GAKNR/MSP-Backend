@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.bson.types.ObjectId;
 
+import java.util.Objects;
+
 
 @AllArgsConstructor
 @Getter
@@ -16,18 +18,15 @@ public class OutfitStructureEntity {
     private ObjectId topwear;
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        OutfitStructureEntity other = (OutfitStructureEntity) obj;
-        return shoes.equals(other.shoes) && bottomwear.equals(other.bottomwear) && topwear.equals(other.topwear);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OutfitStructureEntity that = (OutfitStructureEntity) o;
+        return Objects.equals(shoes, that.shoes) && Objects.equals(bottomwear, that.bottomwear) && Objects.equals(topwear, that.topwear);
     }
 
     @Override
     public int hashCode() {
-        int result = shoes.hashCode();
-        result = 31 * result + bottomwear.hashCode();
-        result = 31 * result + topwear.hashCode();
-        return result;
+        return Objects.hash(shoes, bottomwear, topwear);
     }
 }
