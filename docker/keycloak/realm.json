@@ -2375,7 +2375,7 @@
   "webAuthnPolicyPasswordlessAcceptableAaguids" : [ ],
   "webAuthnPolicyPasswordlessExtraOrigins" : [ ],
   "users" : [ {
-    "id" : "6ee49e68-639f-47e3-ae6e-03cb30515382",
+    "id" : "1",
     "username" : "test",
     "firstName" : "test",
     "lastName" : "test",
