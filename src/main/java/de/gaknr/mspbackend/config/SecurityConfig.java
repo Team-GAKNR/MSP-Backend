@@ -1,7 +1,10 @@
 package de.gaknr.mspbackend.config;
 
+import org.keycloak.adapters.springsecurity.KeycloakConfiguration;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -13,19 +16,19 @@ import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.oauth2.core.oidc.user.OidcUserAuthority;
 import org.springframework.security.oauth2.core.user.OAuth2UserAuthority;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
 import org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy;
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.cors.CorsConfiguration;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Configuration
 @EnableWebSecurity
+@KeycloakConfiguration
 class SecurityConfig {
 
     private static final String GROUPS = "groups";
@@ -61,6 +64,45 @@ class SecurityConfig {
     }
 
     @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+            .cors(cors -> cors.configurationSource(request -> {
+                CorsConfiguration config = new CorsConfiguration();
+                config.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
+                config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+                config.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
+                config.setAllowCredentials(true);
+                return config;
+            }))
+            .csrf(csrf -> csrf.disable())
+            .authorizeHttpRequests(authz ->
+                authz
+                    .requestMatchers("/api/**").authenticated()
+                    .anyRequest().permitAll()
+            )
+            .oauth2Login(oauth2 ->
+                oauth2
+                    .loginPage("/oauth2/authorization/keycloak")
+                    .defaultSuccessUrl("http://localhost:4200")
+                    .failureUrl("/login?error")
+            )
+            .logout(logout ->
+                logout
+                    .logoutSuccessUrl("/login?logout")
+                    .logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler())
+            )
+            .sessionManagement(session ->
+                session
+                    .invalidSessionUrl("/login?invalid")
+                    .sessionFixation().migrateSession()
+                    .maximumSessions(1)
+                    .expiredUrl("/login?expired")
+            );
+
+        return http.build();
+    }
+
+    @Bean
     public GrantedAuthoritiesMapper userAuthoritiesMapperForKeycloak() {
         return authorities -> {
             Set<GrantedAuthority> mappedAuthorities = new HashSet<>();
@@ -71,8 +113,6 @@ class SecurityConfig {
                 var oidcUserAuthority = (OidcUserAuthority) authority;
                 var userInfo = oidcUserAuthority.getUserInfo();
 
-                // Tokens can be configured to return roles under
-                // Groups or REALM ACCESS hence have to check both
                 if (userInfo.hasClaim(REALM_ACCESS_CLAIM)) {
                     var realmAccess = userInfo.getClaimAsMap(REALM_ACCESS_CLAIM);
                     var roles = (Collection<String>) realmAccess.get(ROLES_CLAIM);
