@@ -2,11 +2,17 @@ package de.gaknr.mspbackend.clothingitem.enums;
 
 public enum SubCategory {
 
-    Topwear,
-    Shoes,
-    Bags,
     Bottomwear,
-    Watches,
+    Topwear,
+    Dress,
+    Innerwear,
+    LoungewearAndNightwear,
+    Headwear,
+    Scarves,
+    Socks,
+    Shoes,
+    Sandal,
+    FlipFlops,
     NA
 
 }

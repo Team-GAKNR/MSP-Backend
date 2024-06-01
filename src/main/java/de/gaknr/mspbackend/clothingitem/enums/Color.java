@@ -5,53 +5,51 @@ import java.util.List;
 
 public enum Color {
 
-    Sea_Green,
-    Skin,
-    Maroon,
-    Red,
-    Steel,
-    Pink,
-    Peach,
+    White,
+    Blue,
+    Grey,
     Black,
-    Olive,
-    Copper,
-    Purple,
-    Mustard,
-    Khaki,
-    Orange,
-    Bronze,
-    Beige,
     Navy_Blue,
-    Coffee_Brown,
-    Tan,
-    Charcoal,
-    Metallic,
-    Turquoise_Blue,
-    Cream,
-    Magenta,
-    Teal,
-    Mauve,
-    Nude,
-    Silver,
+    Red,
     Grey_Melange,
     Yellow,
-    Burgundy,
-    Mushroom_Brown,
-    Rose,
-    Grey,
-    Lavender,
-    Blue,
-    NA,
-    Gold,
-    Rust,
-    Lime_Green,
-    Multi,
-    Off_White,
-    Fluorescent_Green,
-    White,
-    Green,
+    Pink,
     Brown,
-    Taupe;
+    Silver,
+    Green,
+    Purple,
+    Maroon,
+    Magenta,
+    Beige,
+    Orange,
+    Cream,
+    Gold,
+    Copper,
+    Tan,
+    Teal,
+    Multi,
+    Khaki,
+    Olive,
+    Peach,
+    Mauve,
+    Coffee_Brown,
+    Turquoise_Blue,
+    Taupe,
+    Lavender,
+    Off_White,
+    Charcoal,
+    Nude,
+    Bronze,
+    Fluorescent_Green,
+    Burgundy,
+    Rust,
+    Mustard,
+    Skin,
+    Sea_Green,
+    Lime_Green,
+    Mushroom_Brown,
+    Metallic,
+    NA;
 
     public Boolean isBlue(Color color) {
         List<Color> blueColors = Arrays.asList(
@@ -76,7 +74,8 @@ public enum Color {
             Color.Khaki,
             Color.Teal,
             Color.Lime_Green,
-            Color.Green
+            Color.Green,
+            Color.Fluorescent_Green
         );
         return greenColors.contains(color);
     }
@@ -84,7 +83,8 @@ public enum Color {
     public Boolean isYellow(Color color) {
         List<Color> yellowColors = Arrays.asList(
             Color.Yellow,
-            Color.Gold
+            Color.Gold,
+            Color.Mustard
         );
         return yellowColors.contains(color);
     }
@@ -96,8 +96,8 @@ public enum Color {
             Color.Magenta,
             Color.Mauve,
             Color.Nude,
-            Color.Rose,
-            Color.Lavender
+            Color.Lavender,
+            Color.Skin
         );
         return pinkColors.contains(color);
     }
@@ -138,7 +138,6 @@ public enum Color {
 
     public Boolean isWhite(Color color) {
         List<Color> whiteColors = Arrays.asList(
-            Color.Steel,
             Color.Metallic,
             Color.Silver,
             Color.Grey_Melange,
