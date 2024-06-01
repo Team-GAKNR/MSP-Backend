@@ -6,7 +6,7 @@ public enum SubCategory {
     Topwear,
     Dress,
     Innerwear,
-    LoungewearAndNightwear,
+    Loungewear_And_Nightwear,
     Headwear,
     Scarves,
     Socks,
