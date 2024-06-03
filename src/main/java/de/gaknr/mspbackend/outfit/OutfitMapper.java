@@ -44,6 +44,18 @@ public class OutfitMapper {
         );
     }
 
+    public GetOutfitDTO mapNullOutfitEntityToDTO(OutfitEntity outfitEntity) {
+        List<GetClothingItemDTO> list = new ArrayList<>();
+        for (ObjectId id : outfitEntity.getPieces()) {
+            list.add(this.clothingItemMapper.mapClothingItemEntityToGetClothingItemDTO(this.clothingItemService.getById(id)));
+        }
+        return new GetOutfitDTO(
+            null,
+            list,
+            outfitEntity.isFavorite()
+        );
+    }
+
     public OutfitEntity mapOutfitStructureEntityToOutfitEntity(OutfitStructureEntity outfitStructureEntity) {
         List<ObjectId> piecesFromOutfitStructure = new ArrayList<>();
         piecesFromOutfitStructure.add(outfitStructureEntity.getShoes());

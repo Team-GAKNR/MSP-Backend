@@ -290,7 +290,7 @@ public class UserController {
         @RequestParam("user-id") String userId,
         @RequestParam("usage") String usage
     ) {
-        GetOutfitDTO getOutfitDTO = outfitMapper.mapOutfitEntityToDTO(
+        GetOutfitDTO getOutfitDTO = outfitMapper.mapNullOutfitEntityToDTO(
             outfitMapper.mapOutfitStructureEntityToOutfitEntity(
                 outfitGenerationService.generateOutfitByUsage(
                     userService.getById(userId).getCloset(), usage
@@ -315,7 +315,7 @@ public class UserController {
             .generateOutfitForEachUsage(userService.getById(userId).getCloset());
         for(OutfitStructureEntity outfit : outfitStructureEntityList) {
             getOutfitDTOS.add(
-                outfitMapper.mapOutfitEntityToDTO(
+                outfitMapper.mapNullOutfitEntityToDTO(
                     outfitMapper.mapOutfitStructureEntityToOutfitEntity(outfit))
             );
         }
