@@ -28,7 +28,7 @@ public class ClothingItemMapper {
 
     public GetClothingItemDTO mapClothingItemEntityToGetClothingItemDTO(ClothingItemEntity clothingItemEntity) {
         return new GetClothingItemDTO(
-            clothingItemEntity.getId(),
+            clothingItemEntity.getId().toString(),
             clothingItemEntity.getName(),
             Base64.getDecoder().decode(clothingItemEntity.getImage()),
             clothingItemEntity.getBrand(),
