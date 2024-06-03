@@ -38,7 +38,7 @@ public class OutfitMapper {
             list.add(this.clothingItemMapper.mapClothingItemEntityToGetClothingItemDTO(this.clothingItemService.getById(id)));
         }
         return new GetOutfitDTO(
-            outfitEntity.getId(),
+            outfitEntity.getId().toString(),
             list,
             outfitEntity.isFavorite()
         );
