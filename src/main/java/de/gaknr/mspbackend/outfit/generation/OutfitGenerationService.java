@@ -52,9 +52,7 @@ public class OutfitGenerationService {
         outfitShoesItem = selectRandomItemFromList(shoesItems);
         outfitBottomwearItem = selectRandomItemFromList(bottomwearItems);
 
-        outfitTopwearItem = selectRandomItemFromList(colorHelperService.findMatchingItems(
-            clothingItemService.getById(outfitBottomwearItem).getColor(), topwearItems
-        ));
+        outfitTopwearItem = selectRandomItemFromList(topwearItems);
 
         return new OutfitStructureEntity(
             outfitShoesItem,
@@ -66,6 +64,9 @@ public class OutfitGenerationService {
 
     public ObjectId selectRandomItemFromList(List<ObjectId> items) {
         Random rand = new Random();
+        if(items.isEmpty()){
+            return null;
+        }
         return items.get(rand.nextInt(items.size()));
     }
 
@@ -167,6 +168,9 @@ public class OutfitGenerationService {
         for(String s : getAvailableUsagesForCloset(closet)) {
             returnList.add(generateOutfitByUsage(closet, s));
         }
+
+        returnList.removeIf(e -> e.getTopwear() == null || e.getBottomwear() == null || e.getShoes() == null);
+
         return returnList;
     }
 
