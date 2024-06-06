@@ -44,3 +44,16 @@ services:
       - ./keycloak/keycloakScript.sh:/opt/keycloak/scripts/keycloakScript.sh
     logging: *logging
     entrypoint: "bash -c 'sleep 15 && /opt/keycloak/scripts/keycloakScript.sh'"
+
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "mspadmin"
+      MONGO_INITDB_ROOT_PASSWORD: "adminPassword"
+      MONGO_INITDB_DATABASE: "MSP"
+    ports:
+      - 27017:27017
+    volumes:
+      - ./mongodb/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
